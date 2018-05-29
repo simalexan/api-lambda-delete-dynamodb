@@ -9,13 +9,13 @@ exports.handler = (event) => {
     if (event.httpMethod === 'OPTIONS') {
 		return Promise.resolve(processResponse(IS_CORS));
 	}
-    const requestedShopId = event.pathParameters[PRIMARY_KEY];
-    if (!requestedShopId) {
+    const requestedItemId = event.pathParameters.id;
+    if (!requestedItemId) {
         return Promise.resolve(processResponse(IS_CORS, 'invalid', 400));
     }
 
     let key = {};
-    key[PRIMARY_KEY] = requestedShopId;
+    key[PRIMARY_KEY] = requestedItemId;
     let params = {
         TableName: TABLE_NAME,
         Key: key

@@ -30,8 +30,17 @@ Resources:
           title:
             Ref: AWS::StackName
         paths:
-          /save:
-            post:
+          /{item}/{id}:
+            delete:
+              parameters:
+              - name: item
+                in: path
+                required: true
+                type: string
+              - name: id
+                in: path
+                required: true
+                type: string
               responses: {}
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -56,8 +65,8 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: !Sub /${TableName}/{${TableName}Id}
-            Method: POST
+            Path: /{item}/{id}
+            Method: DELETE
             RestApiId: !Ref ApiDelete
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
@@ -76,10 +85,10 @@ Resources:
         WriteCapacityUnits: 1
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
-        
+
 Outputs:
   ApiUrl:
-    Value: !Sub https://${ApiDelete}.execute-api.${AWS::Region}.amazonaws.com/prod/${}
+    Value: !Sub https://${ApiDelete}.execute-api.${AWS::Region}.amazonaws.com/prod/${TableName}/<some-id>
     Description: The URL of the API Gateway you invoke to delete an item from your DynamoDB Table.
   DynamoDBTableArn:
     Value: !GetAtt DynamoDBTable.Arn
