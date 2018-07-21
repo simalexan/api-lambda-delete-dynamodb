@@ -1,9 +1,9 @@
-const AWS = require('aws-sdk');
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const processResponse = require('./process-response');
-const TABLE_NAME = process.env.TABLE_NAME;
-const IS_CORS = true;
-const PRIMARY_KEY = process.env.PRIMARY_KEY;
+const AWS = require('aws-sdk'),
+    dynamoDb = new AWS.DynamoDB.DocumentClient(),
+    processResponse = require('./process-response'),
+    TABLE_NAME = process.env.TABLE_NAME,
+    IS_CORS = process.env.IS_CORS,
+    PRIMARY_KEY = process.env.PRIMARY_KEY;
 
 exports.handler = (event) => {
     if (event.httpMethod === 'OPTIONS') {
@@ -11,7 +11,7 @@ exports.handler = (event) => {
 	}
     const requestedItemId = event.pathParameters.id;
     if (!requestedItemId) {
-        return Promise.resolve(processResponse(IS_CORS, 'invalid', 400));
+        return Promise.resolve(processResponse(IS_CORS, `Error: You missing the id parameter`, 400));
     }
 
     let key = {};
