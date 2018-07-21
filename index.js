@@ -11,7 +11,7 @@ exports.handler = (event) => {
 	}
     const requestedItemId = event.pathParameters.id;
     if (!requestedItemId) {
-        return Promise.resolve(processResponse(IS_CORS, `Error: You missing the id parameter`, 400));
+        return Promise.resolve(processResponse(IS_CORS, `Error: You're missing the id parameter`, 400));
     }
 
     let key = {};
