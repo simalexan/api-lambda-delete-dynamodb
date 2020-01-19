@@ -51,7 +51,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      Runtime: nodejs8.10
+      Runtime: nodejs12.x
       Environment:
         Variables:
           TABLE_NAME: !Ref TableName
@@ -68,31 +68,11 @@ Resources:
             Path: /{item}/{id}
             Method: DELETE
             RestApiId: !Ref ApiDelete
-  DynamoDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref TableName
-      AttributeDefinitions:
-        -
-          AttributeName: !Sub ${TableName}Id
-          AttributeType: S
-      KeySchema:
-        -
-          AttributeName: !Sub ${TableName}Id
-          KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
 
 Outputs:
   ApiUrl:
     Value: !Sub https://${ApiDelete}.execute-api.${AWS::Region}.amazonaws.com/prod/${TableName}/<some-id>
     Description: The URL of the API Gateway you invoke to delete an item from your DynamoDB Table.
-  DynamoDBTableArn:
-    Value: !GetAtt DynamoDBTable.Arn
-    Description: The ARN of your DynamoDB Table
-  DynamoDBTableStreamArn:
-    Value: !GetAtt DynamoDBTable.StreamArn
-    Description: The ARN of your DynamoDB Table Stream
+  DynamoDBTableName:
+    Value: !Ref TableName
+    Description: The name of the DynamoDB Table
