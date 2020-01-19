@@ -15,15 +15,9 @@ Aside from this main functionality, its important features are:
 - Written in Node.js
 - Easily composable into your other app components by adding triggers to its DynamoDB table
 
-It's a Nuts & Bolts application component for AWS Serverless Application Repository.
+## Latest Release - 1.1.0
 
-## Latest Release - 1.0.1
-
-Added a few fixes regarding datatable naming and CORS:
-
-- Enabled underscore `_` as an enabled character in the table name
-- Fixed the CORS issue, now the DELETE request is CORS enabled as well
-- Fixed the error reply for the missing id path parameter
+- Upgraded to Node.js 12.x LTS
 
 ## Roadmap - Upcoming changes
 
@@ -31,4 +25,3 @@ Here are the upcoming changes that I'll add to this serverless component:
 
 - ESLint
 - Tests
-- Conditional DynamoDB table creation
